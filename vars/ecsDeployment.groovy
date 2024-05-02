@@ -72,9 +72,6 @@ def call (){
         
         aws ecs register-task-definition --family ${FAMILY} --region  ${REGION} --execution-role-arn ${TASK_EXEC_ROLE} --task-role-arn ${TASK_EXEC_ROLE} --requires-compatibilities FARGATE  --cpu $CPU --memory $MEMORY --network-mode awsvpc --cli-input-json file://td.json
     
-        #Takes TaskDefinition revision name as a Variable
-        #REVISION=$(aws ecs describe-task-definition --task-definition ${FAMILY}  --region ${REGION} | egrep "revision" | tr "," " " | awk '{print $2}')
-        
         REVISION=$(aws ecs describe-task-definition --task-definition ${FAMILY}  --region ${REGION} --query taskDefinition.revision)
         #Updates The service with the latest TaskDefinition Revision
 
